@@ -17,21 +17,88 @@ use 5.010;
 use strict;
 use warnings;
 use diagnostics;
-BEGIN{
-	if ($] < 5.018) {
+BEGIN
+{
+	if ($] < 5.018) 
+	{
 		package experimental;
 		use warnings::register;
 	}
 }
 no warnings 'experimental';
 
-sub tokenize {
+sub tokenize 
+{
 	chomp(my $expr = shift);
-	my @res;
+	my @res = split m{((?<!e)[-+]|[*^/()]|\s+)}, $expr;
+	my @operation = ('+', '-', '*', '/', '^');
+	my @unar_op = ('U+', 'U-');
+	my @symbols = (@operation, @unar_op, '(', ')');
+	my $last = '(';
+	my $i = 0;	
+	while ($i <= $#res)
+	{
+		if(($res[$i] eq "") || ($res[$i] =~ /\s+/))
+		{
+			splice(@res, $i, 1);
+			next;
+		}
 
-	# ...
 
+		if (($res[$i] eq "+") && ($last ~~ @symbols) && (!($last eq ')')))
+		{
+			$res[$i] = 'U+';
+		}
+		if (($res[$i] eq "-") && ($last ~~ @symbols) && (!($last eq ')')))
+		{
+			$res[$i] = 'U-';		
+		}
+		if (!($res[$i] ~~ @symbols))
+		{
+			if($res[$i] =~ /[^e+0-9.-]/)	
+			{
+				die "Err: $res[$i]";
+			}
+			if ($res[$i] =~ /.*e.*e.*/)
+			{
+				die "Err: $res[$i]"
+			}
+			if ($res[$i] =~ /.*\..*\..*/)
+			{
+				die "Err: $res[$i]"
+			}
+			my $p = 0 + $res[$i];
+			$res[$i] = "$p";
+		}
+		
+		if($res[$i] ~~ @operation)
+		{
+			if 	(($last ~~ @unar_op)
+			||	(($last ~~ @operation) || ($last eq '('))
+			||	($i == $#res))
+			{
+				die "Err";
+			}
+		}
+		if((!($res[$i] ~~ @symbols)) && (!($last ~~ @symbols)))
+		{
+			die "Err";
+		}
+				
+		
+		if(($res[$i] eq ')') && (($last ~~ @operation) || ($last ~~ @unar_op)))
+		{
+			die "Err";
+		}
+
+		if(($res[$i] ~~ @unar_op) && ($i == $#res))
+		{
+			die "Err";
+		}
+		
+		$last = $res[$i];
+		$i++;
+	}
 	return \@res;
 }
-
 1;

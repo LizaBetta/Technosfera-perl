@@ -17,12 +17,51 @@ BEGIN{
 }
 no warnings 'experimental';
 
+
 sub evaluate {
 	my $rpn = shift;
+	my @bin_op = ('+', '-', '*', '/', '^');
+	my @stack;
 
-	# ...
+	foreach my $c (@$rpn)
+	{
+		if ($c ~~ @bin_op)
+		{
+			my $b = pop(@stack);
+			my $a = pop(@stack);
+			if($c eq '+')
+			{
+				push(@stack, $a + $b);	
+			}
+			if($c eq '-')
+			{
+				push(@stack, $a - $b);	
+			}
+			if($c eq '*')
+			{
+				push(@stack, $a * $b);	
+			}
+			if($c eq '/')
+			{
+				push(@stack, $a / $b);	
+			}
+			if($c eq '^')
+			{
+				push(@stack, $a ** $b);	
+			}
+		}
+		elsif ($c eq 'U-')
+		{
+			my $a = pop(@stack);
+			push(@stack, -$a);	
+		}
+		elsif($c ne 'U+')
+		{
+			push(@stack, 0 + $c);
+		}
+	}
 
-	return 0;
+	return $stack[0];
 }
 
 1;
