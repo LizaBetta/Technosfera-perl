@@ -161,7 +161,6 @@ O_FILES  =
 H_FILES  = 
 MAN1PODS = 
 MAN3PODS = lib/Local/CutStr.pm \
-	lib/Local/Filter.pm \
 	lib/Local/MusicLibrary.pm \
 	lib/Local/Sort.pm \
 	lib/Local/Table.pm
@@ -188,15 +187,12 @@ PERL_ARCHIVE_AFTER =
 
 
 TO_INST_PM = lib/Local/CutStr.pm \
-	lib/Local/Filter.pm \
 	lib/Local/MusicLibrary.pm \
 	lib/Local/Sort.pm \
 	lib/Local/Table.pm
 
 PM_TO_BLIB = lib/Local/CutStr.pm \
 	blib/lib/Local/CutStr.pm \
-	lib/Local/Filter.pm \
-	blib/lib/Local/Filter.pm \
 	lib/Local/MusicLibrary.pm \
 	blib/lib/Local/MusicLibrary.pm \
 	lib/Local/Sort.pm \
@@ -428,13 +424,11 @@ POD2MAN = $(POD2MAN_EXE)
 
 manifypods : pure_all  \
 	lib/Local/CutStr.pm \
-	lib/Local/Filter.pm \
 	lib/Local/MusicLibrary.pm \
 	lib/Local/Sort.pm \
 	lib/Local/Table.pm
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) -u \
 	  lib/Local/CutStr.pm $(INST_MAN3DIR)/Local::CutStr.$(MAN3EXT) \
-	  lib/Local/Filter.pm $(INST_MAN3DIR)/Local::Filter.$(MAN3EXT) \
 	  lib/Local/MusicLibrary.pm $(INST_MAN3DIR)/Local::MusicLibrary.$(MAN3EXT) \
 	  lib/Local/Sort.pm $(INST_MAN3DIR)/Local::Sort.$(MAN3EXT) \
 	  lib/Local/Table.pm $(INST_MAN3DIR)/Local::Table.$(MAN3EXT) 
@@ -511,7 +505,7 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(FIRST_MAKEFILE) $(MAKEFILE_OLD) 
+	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
@@ -873,7 +867,6 @@ ppd :
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
 	  lib/Local/CutStr.pm blib/lib/Local/CutStr.pm \
-	  lib/Local/Filter.pm blib/lib/Local/Filter.pm \
 	  lib/Local/MusicLibrary.pm blib/lib/Local/MusicLibrary.pm \
 	  lib/Local/Sort.pm blib/lib/Local/Sort.pm \
 	  lib/Local/Table.pm blib/lib/Local/Table.pm 
