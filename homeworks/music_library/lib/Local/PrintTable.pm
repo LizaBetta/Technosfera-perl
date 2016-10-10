@@ -1,4 +1,4 @@
-package Local::Table;
+package Local::PrintTable;
 
 use strict;
 use warnings;
@@ -8,7 +8,6 @@ use FindBin '$Bin';
 use lib "$Bin/../..";
 
 
-use Local::CutStr;
 
 =encoding utf8
 

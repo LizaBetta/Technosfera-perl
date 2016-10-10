@@ -6,9 +6,9 @@ use diagnostics;
 use FindBin '$Bin';
 use lib "$Bin/../lib";
 
-use Local::Table;
-use Local::Sort;
-use Local::Filter;
+use Local::PrintTable;
+use Local::MusicLibrary::Sort;
+use Local::MusicLibrary::Filter;
 
 sub read_args
 {
@@ -49,7 +49,7 @@ while (<>)
 {
     if (length($_) != 0)
     {
-        Local::Filter::push_str($_, \@table, \%col_width, $filter_type, $filter_name);
+        Local::MusicLibrary::Filter::push_str($_, \@table, \%col_width, $filter_type, $filter_name);
     }
 }
 
@@ -57,9 +57,9 @@ if( scalar(@table) != 0)
 {
     if(defined($sort_name))
     {
-        Local::Sort::sort_table(\@table, $sort_name);
+        Local::MusicLibrary::Sort::sort_table(\@table, $sort_name);
     }
-    Local::Table::print_table(\@table, \%col_width, \@order);
+    Local::PrintTable::print_table(\@table, \%col_width, \@order);
 }
 
 

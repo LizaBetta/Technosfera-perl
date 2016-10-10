@@ -1,8 +1,9 @@
-package Local::Filter;
+package Local::MusicLibrary::Filter;
 
 use strict;
 use warnings;
 use diagnostics;
+use Local::MusicLibrary::CutStr;
 
 =encoding utf8
 
@@ -60,7 +61,7 @@ sub filter
 sub push_str
 {
     my ($data, $table, $col_width, $filter_type, $filter_name) = @_;
-    my %str = Local::CutStr::cut_str($data);
+    my %str = Local::MusicLibrary::CutStr::cut_str($data);
     if(filter(\%str, $filter_name, $filter_type)) { return 0; }
     max_width(\%str, $col_width);
     if (@{$table} != 0)
