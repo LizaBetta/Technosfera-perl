@@ -22,14 +22,12 @@ our $VERSION = '1.00';
 
 =cut
 
-sub w
+sub compair
 {
     my $sort_name = shift;
     if ($sort_name eq 'year')
     {
-        my $x = $a;
-        my $y = $b;
-        0 + $x->{'year'} <=> 0 + $y->{'year'};
+       $a->{'year'} <=> $b->{'year'};
     }
     else
     {
@@ -41,5 +39,5 @@ sub sort_table
 {
     my $table = shift;
     my $sort_name = shift;
-    @$table = sort {w($sort_name)} @$table;
+    @$table = sort {compair($sort_name)} @$table;
 }

@@ -41,7 +41,7 @@ sub cut_str
         (?<format>[^\n\.]+$)
     }x;
     return %+;
-1;}
+}
 
 
 

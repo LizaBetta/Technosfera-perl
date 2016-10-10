@@ -28,39 +28,8 @@ our $VERSION = '1.00';
 
 =cut
 
-sub max_width
-{
-    my ($str, $width) = @_;
-    my $keys;
-    my $value;
-    while (($keys, $value) = each %$str)
-    {
-        if(length($value) + 2 > $width->{$keys})
-        {
-            $width->{$keys} = length($value) + 2;
-        }
-    }
-1;}
-    
-sub filter
-{
-    my ($str, $filter_name, $filter_type) = @_;
-    if (defined($filter_name))
-    {
-        if ($filter_type eq 'year')
-        {
-            if (0 + $str->{$filter_type} != $filter_name)
-            {
-                return 1;
-            }
-        }
-        elsif ($str->{$filter_type} ne $filter_name)
-        {
-            return 1;
-        }
-    } 
-    return 0;
-1;}
+
+
 
 sub print_line
 {
@@ -96,22 +65,6 @@ sub print_words
     }
     print "\n";
 }
-sub push_str
-{
-    my ($data, $table, $col_width, $filter_type, $filter_name) = @_;
-    my %str = Local::CutStr::cut_str($data);
-    if(filter(\%str, $filter_name, $filter_type)) { return 0; }
-    max_width(\%str, $col_width);
-    if (scalar(@$table) != 0)
-    { 
-        %{ $table -> [ $#{$table} + 1 ] } = %str; 
-    }
-    else
-    {
-         %{ $table -> [ 0 ] } = %str;
-    }
-    return $table;
-1;} 
 
 
 sub print_table
@@ -119,7 +72,7 @@ sub print_table
     my ($table, $width, $order) = @_;
     my $table_width = scalar(@$order) + 1;#учитываем перегородки
     my $t_rows = scalar(@$table);
-    if($t_rows == 0 or scalar(@$order) == 0){ return; }
+    if($t_rows == 0 or @$order == 0){ return; }
     foreach my $v (@$order)
     {
         $table_width += $width->{$v};
@@ -139,6 +92,6 @@ sub print_table
     print '\\';
     foreach (2..$table_width - 1){ print "-"; }
     print "/\n";
-1;}
+}
 
 1;
