@@ -31,7 +31,7 @@ Getopt::Long::GetOptions('album:s'=>  \&handler,
                          'track:s'=> \&handler,
                          'band:s'=> \&handler,
                          'year:s'=> \&handler,
-                         'format:s'=> \&handle,
+                         'format:s'=> \&handler
                          'sort:s' => \$sort_name,
                          'columns:s' => \$ord); 
 
