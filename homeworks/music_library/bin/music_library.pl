@@ -5,46 +5,41 @@ use diagnostics;
 
 use FindBin '$Bin';
 use lib "$Bin/../lib";
+use Getopt::Long;
 
 use Local::PrintTable;
 use Local::MusicLibrary::Sort;
 use Local::MusicLibrary::Filter;
 
-sub read_args
-{
-    my ($name_sort, $name_filter, $order, $type_filter) = @_;
-    my $arg = shift @ARGV;
-    if($arg eq '--sort')
-    {
-         $$name_sort   = shift @ARGV;
-    }
-    elsif($arg eq '--columns')
-    {
-        my $x = shift(@ARGV);
-        @$order = split (/\,/, $x);
-    }
-    else
-    {
-        $$type_filter = $arg;
-        $$type_filter =~ s/-+//;
-        $$name_filter = shift @ARGV; 
-    }
-}
-
 my $sort_name;
-my $filter_type = 'filter';
+my $filter_type;
 my $filter_name;
 my @order = ('band', 'year', 'album', 'track', 'format');
+my $ord;
 my @table;
 my %col_width = ( 'band' => 2,
               'year' => 2,
               'album' => 2,
               'track' => 2,
               'format' => 2);
-while(@ARGV != 0)
+sub handler
 {
-    read_args(\$sort_name, \$filter_name, \@order, \$filter_type);
+    ($filter_type, $filter_name) = @_;
 }
+
+Getopt::Long::GetOptions('album:s'=>  \&handler,
+                         'track:s'=> \&handler,
+                         'band:s'=> \&handler,
+                         'year:s'=> \&handler,
+                         'format:s'=> \&handle,
+                         'sort:s' => \$sort_name,
+                         'columns:s' => \$ord); 
+
+if (defined($ord))
+{
+    @order = split (/\,/, $ord);
+}
+
 while (<>) 
 {
     if (length($_) != 0)
