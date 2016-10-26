@@ -40,17 +40,17 @@ sub max_width
 
 sub filter
 {
-    my ($str, $filter_name, $filter_type) = @_;
-    if (defined($filter_name))
+    my ($str, %filter) = @_;
+    if (defined(%filter))
     {
-        if ($filter_type eq 'year')
+        if (defined(%filter{'year'}))
         {
-            if ($str->{$filter_type} != $filter_name)
+            if ($str->{%filter{'year'}} != %filter{'year'})
             {
                 return 1;
             }
         }
-        elsif ($str->{$filter_type} ne $filter_name)
+        elsif ($str->{} ne $filter_name)
         {
             return 1;
         }

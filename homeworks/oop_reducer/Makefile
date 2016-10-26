@@ -1,4 +1,4 @@
-# This Makefile is for the Local::Iterator extension to perl.
+# This Makefile is for the Local::Reducer extension to perl.
 #
 # It was generated automatically by MakeMaker version
 # 7.0401 (Revision: 70401) from the contents of
@@ -13,11 +13,10 @@
 
 #     BUILD_REQUIRES => {  }
 #     CONFIGURE_REQUIRES => {  }
-#     EXE_FILES => [q[bin/music_library.pl]]
-#     NAME => q[Local::Iterator]
+#     NAME => q[Local::Reducer]
 #     PREREQ_PM => {  }
 #     TEST_REQUIRES => {  }
-#     VERSION_FROM => q[lib/Local/MusicLibrary.pm]
+#     VERSION_FROM => q[lib/Local/Reducer.pm]
 
 # --- MakeMaker post_initialize section:
 
@@ -54,8 +53,8 @@ VENDORLIBEXP = /usr/share/perl5
 AR_STATIC_ARGS = cr
 DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
-NAME = Local::Iterator
-NAME_SYM = Local_Iterator
+NAME = Local::Reducer
+NAME_SYM = Local_Reducer
 VERSION = 1.00
 VERSION_MACRO = VERSION
 VERSION_SYM = 1_00
@@ -144,11 +143,11 @@ MM_REVISION = 70401
 # PARENT_NAME = NAME without BASEEXT and no trailing :: (eg Foo::Bar)
 # DLBASE  = Basename part of dynamic library. May be just equal BASEEXT.
 MAKE = make
-FULLEXT = Local/Iterator
-BASEEXT = Iterator
+FULLEXT = Local/Reducer
+BASEEXT = Reducer
 PARENT_NAME = Local
 DLBASE = $(BASEEXT)
-VERSION_FROM = lib/Local/MusicLibrary.pm
+VERSION_FROM = lib/Local/Reducer.pm
 OBJECT = 
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -160,11 +159,7 @@ C_FILES  =
 O_FILES  = 
 H_FILES  = 
 MAN1PODS = 
-MAN3PODS = lib/Local/MusicLibrary.pm \
-	lib/Local/MusicLibrary/CutStr.pm \
-	lib/Local/MusicLibrary/Filter.pm \
-	lib/Local/MusicLibrary/Sort.pm \
-	lib/Local/PrintTable.pm
+MAN3PODS = lib/Local/Reducer.pm
 
 # Where is the Config information that we are using/depend on
 CONFIGDEP = $(PERL_ARCHLIBDEP)$(DFSEP)Config.pm $(PERL_INCDEP)$(DFSEP)config.h
@@ -187,22 +182,34 @@ PERL_ARCHIVEDEP    =
 PERL_ARCHIVE_AFTER = 
 
 
-TO_INST_PM = lib/Local/MusicLibrary.pm \
-	lib/Local/MusicLibrary/CutStr.pm \
-	lib/Local/MusicLibrary/Filter.pm \
-	lib/Local/MusicLibrary/Sort.pm \
-	lib/Local/PrintTable.pm
+TO_INST_PM = lib/Local/Reducer.pm \
+	lib/Local/Reducer/MaxDiff.pm \
+	lib/Local/Reducer/Sum.pm \
+	lib/Local/Row.pm \
+	lib/Local/Row/JSON.pm \
+	lib/Local/Row/Simple.pm \
+	lib/Local/Source.pm \
+	lib/Local/Source/Array.pm \
+	lib/Local/Source/Text.pm
 
-PM_TO_BLIB = lib/Local/MusicLibrary.pm \
-	blib/lib/Local/MusicLibrary.pm \
-	lib/Local/MusicLibrary/CutStr.pm \
-	blib/lib/Local/MusicLibrary/CutStr.pm \
-	lib/Local/MusicLibrary/Filter.pm \
-	blib/lib/Local/MusicLibrary/Filter.pm \
-	lib/Local/MusicLibrary/Sort.pm \
-	blib/lib/Local/MusicLibrary/Sort.pm \
-	lib/Local/PrintTable.pm \
-	blib/lib/Local/PrintTable.pm
+PM_TO_BLIB = lib/Local/Reducer.pm \
+	blib/lib/Local/Reducer.pm \
+	lib/Local/Reducer/MaxDiff.pm \
+	blib/lib/Local/Reducer/MaxDiff.pm \
+	lib/Local/Reducer/Sum.pm \
+	blib/lib/Local/Reducer/Sum.pm \
+	lib/Local/Row.pm \
+	blib/lib/Local/Row.pm \
+	lib/Local/Row/JSON.pm \
+	blib/lib/Local/Row/JSON.pm \
+	lib/Local/Row/Simple.pm \
+	blib/lib/Local/Row/Simple.pm \
+	lib/Local/Source.pm \
+	blib/lib/Local/Source.pm \
+	lib/Local/Source/Array.pm \
+	blib/lib/Local/Source/Array.pm \
+	lib/Local/Source/Text.pm \
+	blib/lib/Local/Source/Text.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -271,8 +278,8 @@ CI = ci -u
 RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
-DISTNAME = Local-Iterator
-DISTVNAME = Local-Iterator-1.00
+DISTNAME = Local-Reducer
+DISTVNAME = Local-Reducer-1.00
 
 
 # --- MakeMaker macro section:
@@ -427,17 +434,9 @@ POD2MAN = $(POD2MAN_EXE)
 
 
 manifypods : pure_all  \
-	lib/Local/MusicLibrary.pm \
-	lib/Local/MusicLibrary/CutStr.pm \
-	lib/Local/MusicLibrary/Filter.pm \
-	lib/Local/MusicLibrary/Sort.pm \
-	lib/Local/PrintTable.pm
+	lib/Local/Reducer.pm
 	$(NOECHO) $(POD2MAN) --section=$(MAN3EXT) --perm_rw=$(PERM_RW) -u \
-	  lib/Local/MusicLibrary.pm $(INST_MAN3DIR)/Local::MusicLibrary.$(MAN3EXT) \
-	  lib/Local/MusicLibrary/CutStr.pm $(INST_MAN3DIR)/Local::MusicLibrary::CutStr.$(MAN3EXT) \
-	  lib/Local/MusicLibrary/Filter.pm $(INST_MAN3DIR)/Local::MusicLibrary::Filter.$(MAN3EXT) \
-	  lib/Local/MusicLibrary/Sort.pm $(INST_MAN3DIR)/Local::MusicLibrary::Sort.$(MAN3EXT) \
-	  lib/Local/PrintTable.pm $(INST_MAN3DIR)/Local::PrintTable.$(MAN3EXT) 
+	  lib/Local/Reducer.pm $(INST_MAN3DIR)/Local::Reducer.$(MAN3EXT) 
 
 
 
@@ -446,22 +445,6 @@ manifypods : pure_all  \
 
 
 # --- MakeMaker installbin section:
-
-EXE_FILES = bin/music_library.pl
-
-pure_all :: $(INST_SCRIPT)/music_library.pl
-	$(NOECHO) $(NOOP)
-
-realclean ::
-	$(RM_F) \
-	  $(INST_SCRIPT)/music_library.pl 
-
-$(INST_SCRIPT)/music_library.pl : bin/music_library.pl $(FIRST_MAKEFILE) $(INST_SCRIPT)$(DFSEP).exists $(INST_BIN)$(DFSEP).exists
-	$(NOECHO) $(RM_F) $(INST_SCRIPT)/music_library.pl
-	$(CP) bin/music_library.pl $(INST_SCRIPT)/music_library.pl
-	$(FIXIN) $(INST_SCRIPT)/music_library.pl
-	-$(NOECHO) $(CHMOD) $(PERM_RWX) $(INST_SCRIPT)/music_library.pl
-
 
 
 # --- MakeMaker subdirs section:
@@ -533,7 +516,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  url: http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
 	$(NOECHO) $(ECHO) '  version: '\''1.4'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'name: Local-Iterator' >> META_new.yml
+	$(NOECHO) $(ECHO) 'name: Local-Reducer' >> META_new.yml
 	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  directory:' >> META_new.yml
 	$(NOECHO) $(ECHO) '    - t' >> META_new.yml
@@ -557,7 +540,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",' >> META_new.json
 	$(NOECHO) $(ECHO) '      "version" : "2"' >> META_new.json
 	$(NOECHO) $(ECHO) '   },' >> META_new.json
-	$(NOECHO) $(ECHO) '   "name" : "Local-Iterator",' >> META_new.json
+	$(NOECHO) $(ECHO) '   "name" : "Local-Reducer",' >> META_new.json
 	$(NOECHO) $(ECHO) '   "no_index" : {' >> META_new.json
 	$(NOECHO) $(ECHO) '      "directory" : [' >> META_new.json
 	$(NOECHO) $(ECHO) '         "t",' >> META_new.json
@@ -872,11 +855,15 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  lib/Local/MusicLibrary.pm blib/lib/Local/MusicLibrary.pm \
-	  lib/Local/MusicLibrary/CutStr.pm blib/lib/Local/MusicLibrary/CutStr.pm \
-	  lib/Local/MusicLibrary/Filter.pm blib/lib/Local/MusicLibrary/Filter.pm \
-	  lib/Local/MusicLibrary/Sort.pm blib/lib/Local/MusicLibrary/Sort.pm \
-	  lib/Local/PrintTable.pm blib/lib/Local/PrintTable.pm 
+	  lib/Local/Reducer.pm blib/lib/Local/Reducer.pm \
+	  lib/Local/Reducer/MaxDiff.pm blib/lib/Local/Reducer/MaxDiff.pm \
+	  lib/Local/Reducer/Sum.pm blib/lib/Local/Reducer/Sum.pm \
+	  lib/Local/Row.pm blib/lib/Local/Row.pm \
+	  lib/Local/Row/JSON.pm blib/lib/Local/Row/JSON.pm \
+	  lib/Local/Row/Simple.pm blib/lib/Local/Row/Simple.pm \
+	  lib/Local/Source.pm blib/lib/Local/Source.pm \
+	  lib/Local/Source/Array.pm blib/lib/Local/Source/Array.pm \
+	  lib/Local/Source/Text.pm blib/lib/Local/Source/Text.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 

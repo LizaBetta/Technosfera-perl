@@ -12,7 +12,6 @@ use Local::MusicLibrary::Sort;
 use Local::MusicLibrary::Filter;
 
 my $sort_name;
-my $filter_type;
 my $filter_name;
 my @order = ('band', 'year', 'album', 'track', 'format');
 my $ord;
@@ -22,16 +21,12 @@ my %col_width = ( 'band' => 2,
               'album' => 2,
               'track' => 2,
               'format' => 2);
-sub handler
-{
-    ($filter_type, $filter_name) = @_;
-}
 
-Getopt::Long::GetOptions('album:s'=>  \&handler,
-                         'track:s'=> \&handler,
-                         'band:s'=> \&handler,
-                         'year:s'=> \&handler,
-                         'format:s'=> \&handler
+Getopt::Long::GetOptions('album:s'=>  \%filter{'album'},
+                         'track:s'=> \%filter{'track'},
+                         'band:s'=> \%filter{'band'},
+                         'year:s'=> \%filter{'year'},
+                         'format:s'=> \%filter{'format'},
                          'sort:s' => \$sort_name,
                          'columns:s' => \$ord); 
 
@@ -44,7 +39,7 @@ while (<>)
 {
     if (length($_) != 0)
     {
-        Local::MusicLibrary::Filter::push_str($_, \@table, \%col_width, $filter_type, $filter_name);
+        Local::MusicLibrary::Filter::push_str($_, \@table, \%col_width, %filter);
     }
 }
 

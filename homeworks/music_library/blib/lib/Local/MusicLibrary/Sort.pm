@@ -1,4 +1,4 @@
-package Local::Sort;
+package Local::MusicLibrary::Sort;
 
 use strict;
 use warnings;

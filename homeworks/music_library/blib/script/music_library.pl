@@ -5,55 +5,46 @@ use diagnostics;
 
 use FindBin '$Bin';
 use lib "$Bin/../lib";
-package Local::Table;
+use Getopt::Long;
 
-use Local::Table;
-use Local::Sort;
-
-sub read_args
-{
-    my ($name_sort, $name_filter, $order, $type_filter) = @_;
-    if(scalar(@ARGV) != 0)
-    {
-        my $arg = shift @ARGV;
-        if($arg eq '--sort')
-        {
-            $$name_sort   = shift @ARGV;
-        }
-        elsif($arg eq '--columns')
-        {
-            my $x = shift(@ARGV);
-            @$order = split (/\,/, $x);
-        }
-        else
-        {
-            $$type_filter = $arg;
-            $$type_filter =~ s/-+//;
-            $$name_filter = shift @ARGV; 
-        }
-    }    
-}
+use Local::PrintTable;
+use Local::MusicLibrary::Sort;
+use Local::MusicLibrary::Filter;
 
 my $sort_name;
-my $filter_type = 'filter';
+my $filter_type;
 my $filter_name;
 my @order = ('band', 'year', 'album', 'track', 'format');
+my $ord;
 my @table;
 my %col_width = ( 'band' => 2,
               'year' => 2,
               'album' => 2,
               'track' => 2,
               'format' => 2);
+sub handler
+{
+    ($filter_type, $filter_name) = @_;
+}
 
-read_args(\$sort_name, \$filter_name, \@order, \$filter_type);
-read_args(\$sort_name, \$filter_name, \@order, \$filter_type);
-read_args(\$sort_name, \$filter_name, \@order, \$filter_type);
+Getopt::Long::GetOptions('album:s'=>  \&handler,
+                         'track:s'=> \&handler,
+                         'band:s'=> \&handler,
+                         'year:s'=> \&handler,
+                         'format:s'=> \&handle,
+                         'sort:s' => \$sort_name,
+                         'columns:s' => \$ord); 
+
+if (defined($ord))
+{
+    @order = split (/\,/, $ord);
+}
 
 while (<>) 
 {
     if (length($_) != 0)
     {
-        push_str($_, \@table, \%col_width, $filter_type, $filter_name);
+        Local::MusicLibrary::Filter::push_str($_, \@table, \%col_width, $filter_type, $filter_name);
     }
 }
 
@@ -61,9 +52,9 @@ if( scalar(@table) != 0)
 {
     if(defined($sort_name))
     {
-        Local::Sort::sort_table(\@table, $sort_name);
+        Local::MusicLibrary::Sort::sort_table(\@table, $sort_name);
     }
-    print_table(\@table, \%col_width, \@order);
+    Local::PrintTable::print_table(\@table, \%col_width, \@order);
 }
 
 

@@ -1,4 +1,4 @@
-package Local::CutStr;
+package Local::MusicLibrary::CutStr;
 
 use strict;
 use warnings;
