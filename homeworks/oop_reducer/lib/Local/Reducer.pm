@@ -24,23 +24,23 @@ our $VERSION = '1.00';
 
 =cut
 
-has 'reduced' =>
+has reduced =>
 (
 	is => 'rw',
     default => 0,
 );
 
-has 'source' =>
+has source =>
 (
     is => 'rw',
 );
 
-has 'row_class' =>
+has row_class =>
 (
     is => 'rw',   
 );
 
-has 'initial_value' =>
+has initial_value =>
 (
     is => 'rw',
 );
@@ -48,6 +48,24 @@ has 'initial_value' =>
 sub reduced
 {
     my $self = shift;
+    return $self->{'reduced'};
+}
+
+sub reduce_n
+{
+     my ($self, $n) = @_;
+     foreach (1..$n)
+     {
+         $self->_reduce_one;
+     }
+     return $self->{'reduced'};
+}
+ 
+sub reduce_all
+{
+    my ($self) = @_;
+    while ($self->_reduce_one)
+    {}
     return $self->{'reduced'};
 }
 

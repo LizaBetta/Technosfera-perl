@@ -6,21 +6,19 @@ use Mouse;
 #use utf8;
 
 extends 'Local::Row';
-
-sub get
+   
+sub _build_struct
 {
-    my ($self, $name, $default) = @_;
-    foreach($self->{'str'})
+    my ($self) = @_;
+    my $h;
+    foreach($self->{str})
     {
-        if (/\s*${name}\s*:\s*([^,]+)/)
+        while (/\G\s*([^:\s]+)\s*:\s*([^,]+),*/gc)
         {
-            return $1;
-        }
-        else
-        {
-            return $default;
+            $h->{$1} = $2;
         }
     }
+    return $h;
 }
 
 1;
