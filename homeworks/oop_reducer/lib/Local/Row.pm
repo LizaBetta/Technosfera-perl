@@ -19,8 +19,7 @@ has struct =>
 sub get
 {
     my ($self, $name, $default) = @_;
-    if (exists ($self->{struct}->{$name}) and 
-                    (defined $self->{struct}->{$name}))
+    if (exists ($self->{struct}->{$name})) 
     {
         return $self->{struct}->{$name};
     }
