@@ -67,7 +67,7 @@ sub parse
         $collection = $dom->find('.author-info__username>a');
     }
     my $i = $#$collection;
-    if ($#$collection >= 0)
+    if (@$collection)
     {
         $self->{author} = $collection->[$i]->text;
         $self->{author} =~ /@(.*)/;
@@ -81,21 +81,21 @@ sub parse
     }
     
     $collection = $dom->find('.views-count_post');
-    if ($#$collection >= 0)
+    if (@$collection)
     {
         $self->{views} = $collection->[0]->text; 
     }
 
     $collection = $dom->find(  
             '.user-rating__value');
-    if ($#$collection >= 0)
+    if (@$collection)
     {
         $self->{rating} = $collection->[0]->text; 
     }
 
     $collection = $dom->find(
             '.favorite-wjt__counter.js-favs_count');
-    if ($#$collection >= 0)
+    if (@$collection)
     {
        $self->{stars} = $collection->[0]->text; 
     }

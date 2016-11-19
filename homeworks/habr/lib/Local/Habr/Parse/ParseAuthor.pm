@@ -61,7 +61,7 @@ sub parse
         $collection = $dom->find('.author-info__username>a');
     }
     my $i = $#$collection;
-    if ($#$collection >= 0)
+    if (@$collection)
     {
         $self->{name} = $collection->[$i]->text;
         $self->{name} =~ /@(.*)/;

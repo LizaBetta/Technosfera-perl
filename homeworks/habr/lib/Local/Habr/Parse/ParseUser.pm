@@ -50,13 +50,13 @@ sub parse
 
     my $collection = $dom->find(
     '.voting-wjt__counter-score.js-karma_num');
-    if ($#$collection >= 0)
+    if (@$collection)
     {
         $self->{karma} = $collection->[0]->text;
     }   
     
     $collection = $dom->find('.statistic.statistic_user-rating>div');
-    if ($#$collection >= 0)
+    if (@$collection)
     {
         $self->{rating} = $collection->[0]->text;
     }   

@@ -20,6 +20,7 @@ my $posts = Local::Habr::Base::PostsTable->new();
 my $persons = Local::Habr::Base::PersonsTable->new();
 my $commenters = Local::Habr::Base::CommentersTable->new();
 my %arg = Local::Habr::ReadArgs::read_args;
+use Data::Dumper;
 
 
 sub print_data
@@ -27,7 +28,6 @@ sub print_data
     my ($format, $data) = @_;
     if ($format eq 'ddp')
     {
-        use Data::Dumper;
         print Dumper($data->fetchrow_hashref());
     }
     elsif ($format eq 'json')
@@ -41,14 +41,14 @@ sub print_data
 sub get_data
 {
     my ($table, $id, $parser, $query, $refresh) = @_; 
-    my $sth = $table->{dbh}->
+    my $sth = $table->dbh->
             prepare($query);
     if($sth->execute($id) == 0 or defined($refresh))
     {
         my $data = $parser->new();
         $data->parse($id);
         $table->set($data);
-        $sth = $table->{dbh}->prepare($query);
+        $sth = $table->dbh->prepare($query);
         $sth->execute($id);
     }
     return $sth;
@@ -59,10 +59,10 @@ sub get_commenters
     my ($commenters) = @_;
     my $data = Local::Habr::Parse::ParseCommentors->new;
     $data->parse($arg{post_id});
-    my $users = $data->{users};
+    my $users = $data->users;
     foreach(@$users) 
     {
-        my $sth = $commenters->{dbh}->
+        my $sth = $commenters->dbh->
                 prepare('SELECT nik FROM commenters WHERE nik=? and post=?');
         if($sth->execute($_, $arg{post_id}) == 0)
         {
@@ -75,7 +75,7 @@ sub get_commenters_info
 {
     my ($commenters, $persons, %arg) = @_;
     my $users;
-    my $sth = $commenters->{dbh}->
+    my $sth = $commenters->dbh->
             prepare('SELECT nik FROM commenters WHERE post=?');
     if($sth->execute($arg{post_id}) == 0)
     {
@@ -136,7 +136,7 @@ elsif ($arg{post_id})
 }
 elsif (defined($arg{des_posts}))
 {
-    my $sth = $commenters->{dbh}->prepare
+    my $sth = $commenters->dbh->prepare
         ("SELECT post FROM commenters GROUP BY post HAVING COUNT(post)<?");
 
     if ($sth->execute($arg{des_posts}) != 0)
@@ -153,7 +153,7 @@ elsif (defined($arg{des_posts}))
 }
 elsif (defined($arg{self_commenters}))
 {
-    my $sth = $posts->{dbh}->prepare(
+    my $sth = $posts->dbh->prepare(
                 "SELECT post.author FROM post,commenters 
                 WHERE post.author=commenters.nik and 
                 post.id=commenters.post");
