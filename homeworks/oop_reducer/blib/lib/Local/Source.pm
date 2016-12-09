@@ -6,12 +6,12 @@ use diagnostics;
 use Mouse;
 #use utf8;
 
-has 'array' =>
+has array =>
 (
     is => 'ro',
 );
 
-has 'text' =>
+has text =>
 (
     is => 'ro',
 );

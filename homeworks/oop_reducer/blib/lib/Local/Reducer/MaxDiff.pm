@@ -9,38 +9,20 @@ use Mouse;
 extends 'Local::Reducer';
 
 
-has 'top' =>
+has top =>
 (
     is => "ro",
 );
 
-has 'bottom' =>
+has bottom =>
 (
     is => "ro",
 );
 
-sub reduce_n
+sub _reduce_one
 {
-    my ($self, $n) = @_;
-    foreach (1..$n)
-    {
-        my $str = $self->{'source'}->next;
-        my $row = $self->{'row_class'}->new(str => $str,);
-        my $elem1 = $row->get($self->{'bottom'}, 0);
-        my $elem2 = $row->get($self->{'top'}, 0);
-        my $diff = $elem2 - $elem1;
-        if($diff > $self->{'reduced'})
-        {
-            $self->{'reduced'} = $diff;
-        }
-    }
-    return $self->{'reduced'};
-}
-
-sub reduce_all
-{
-    my ($self, $n) = @_;
-    while ((my $str = $self->{'source'}->next) ne 'undef')
+    my ($self) = @_;
+    if((my $str = $self->{'source'}->next) ne 'undef')
     {
         my $row = $self->{'row_class'}->new('str' => $str,);
         my $elem1 = $row->get($self->{'bottom'}, 0);
@@ -50,8 +32,9 @@ sub reduce_all
         {
             $self->{'reduced'} = $diff;
         }
+        return 1;
     }
-    return $self->{'reduced'};
+    else {return 0}
 }
 
 1;
